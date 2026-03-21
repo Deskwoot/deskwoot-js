@@ -1,0 +1,40 @@
+{
+  "name": "deskwoot",
+  "version": "1.0.0",
+  "description": "Official JavaScript/TypeScript client for the Deskwoot API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "deskwoot",
+    "customer-support",
+    "helpdesk",
+    "live-chat",
+    "ai-chatbot",
+    "api-client",
+    "shopify",
+    "woocommerce",
+    "omnichannel",
+    "ticketing"
+  ],
+  "author": "Deskwoot <hello@deskwoot.com> (https://deskwoot.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/Deskwoot/deskwoot-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Deskwoot/deskwoot-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Deskwoot/deskwoot-js/issues"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
