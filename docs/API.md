@@ -5,7 +5,7 @@ Full documentation: [deskwoot.com/docs/api](https://deskwoot.com/docs/api)
 ## Base URL
 
 ```
-https://deskwoot.com/api/v1
+https://api.deskwoot.com/v1
 ```
 
 ## Authentication

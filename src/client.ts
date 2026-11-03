@@ -18,16 +18,18 @@ import type {
 export class Deskwoot {
   private apiToken: string;
   private accountId: string;
-  private baseUrl: string;
+  private apiRoot: string;
 
   constructor(config: DeskwootConfig) {
     this.apiToken = config.apiToken;
     this.accountId = config.accountId;
-    this.baseUrl = (config.baseUrl || "https://deskwoot.com").replace(/\/$/, "");
+    const baseUrl = (config.baseUrl || "https://deskwoot.com").replace(/\/+$/, "");
+    // deskwoot.com serves the REST API at its own host; any other Deskwoot at <baseUrl>/api/v1.
+    this.apiRoot = /^https?:\/\/(www\.)?deskwoot\.com$/i.test(baseUrl) ? "https://api.deskwoot.com/v1" : `${baseUrl}/api/v1`;
   }
 
   private async request<T>(method: string, path: string, body?: unknown): Promise<T> {
-    const url = `${this.baseUrl}${path}`;
+    const url = `${this.apiRoot}${path}`;
     const res = await fetch(url, {
       method,
       headers: {
@@ -47,7 +49,7 @@ export class Deskwoot {
   }
 
   private get basePath() {
-    return `/api/v1/accounts/${this.accountId}`;
+    return `/accounts/${this.accountId}`;
   }
 
   // =========================================================================
@@ -68,7 +70,7 @@ export class Deskwoot {
   }
 
   async getConversation(conversationId: string): Promise<Conversation> {
-    return this.request("GET", `/api/v1/conversations/${conversationId}`);
+    return this.request("GET", `/conversations/${conversationId}`);
   }
 
   async createConversation(data: {
@@ -89,7 +91,7 @@ export class Deskwoot {
     teamId?: string | null;
     muted?: boolean;
   }): Promise<Conversation> {
-    return this.request("PATCH", `/api/v1/conversations/${conversationId}`, data);
+    return this.request("PATCH", `/conversations/${conversationId}`, data);
   }
 
   async bulkConversationAction(action: BulkAction): Promise<void> {
@@ -101,7 +103,7 @@ export class Deskwoot {
   // =========================================================================
 
   async listMessages(conversationId: string): Promise<Message[]> {
-    return this.request("GET", `/api/v1/conversations/${conversationId}/messages`);
+    return this.request("GET", `/conversations/${conversationId}/messages`);
   }
 
   async sendMessage(conversationId: string, data: {
@@ -112,7 +114,7 @@ export class Deskwoot {
     cc?: string[];
     bcc?: string[];
   }): Promise<Message> {
-    return this.request("POST", `/api/v1/conversations/${conversationId}/messages`, data);
+    return this.request("POST", `/conversations/${conversationId}/messages`, data);
   }
 
   // =========================================================================
@@ -217,11 +219,11 @@ export class Deskwoot {
   }
 
   async addLabelToConversation(conversationId: string, labelId: string): Promise<void> {
-    return this.request("POST", `/api/v1/conversations/${conversationId}/labels`, { labelId });
+    return this.request("POST", `/conversations/${conversationId}/labels`, { labelId });
   }
 
   async removeLabelFromConversation(conversationId: string, labelId: string): Promise<void> {
-    return this.request("DELETE", `/api/v1/conversations/${conversationId}/labels`, { labelId });
+    return this.request("DELETE", `/conversations/${conversationId}/labels`, { labelId });
   }
 
   // =========================================================================
