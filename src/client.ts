@@ -323,20 +323,10 @@ export class Deskwoot {
   // Webhooks
   // =========================================================================
 
+  // Webhooks are created, changed and deleted in the dashboard under
+  // Settings > Webhooks. An API token can list them.
   async listWebhooks(): Promise<Webhook[]> {
     return this.request("GET", `${this.basePath}/webhooks`);
-  }
-
-  async createWebhook(data: { url: string; events: string[] }): Promise<Webhook> {
-    return this.request("POST", `${this.basePath}/webhooks`, data);
-  }
-
-  async updateWebhook(webhookId: string, data: Partial<Webhook>): Promise<Webhook> {
-    return this.request("PATCH", `${this.basePath}/webhooks/${webhookId}`, data);
-  }
-
-  async deleteWebhook(webhookId: string): Promise<void> {
-    return this.request("DELETE", `${this.basePath}/webhooks/${webhookId}`);
   }
 }
 

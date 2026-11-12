@@ -331,17 +331,9 @@ DELETE /v1/accounts/{accountId}/automation-rules/{ruleId}
 
 ```
 GET    /v1/accounts/{accountId}/webhooks
-POST   /v1/accounts/{accountId}/webhooks
-PATCH  /v1/accounts/{accountId}/webhooks/{webhookId}
-DELETE /v1/accounts/{accountId}/webhooks/{webhookId}
 ```
 
-```json
-{
-  "url": "https://your-app.com/webhooks",
-  "events": ["message.created", "conversation.created", "conversation.updated", "contact.created", "contact.updated"]
-}
-```
+Webhooks are created, changed and deleted in the dashboard under **Settings > Webhooks**, not with an API token. The secret is shown once, right after you create the webhook.
 
 Webhook payloads include `X-Deskwoot-Signature` header (HMAC-SHA256).
 

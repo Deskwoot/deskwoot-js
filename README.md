@@ -51,7 +51,7 @@ const contact = await client.createContact({
 | Agents | list, invite, update, remove |
 | Canned Responses | list, create, update, delete |
 | Automation Rules | list, create, update, delete |
-| Webhooks | list, create, update, delete |
+| Webhooks | list (create, change and delete them in the dashboard) |
 
 ## Authentication
 
@@ -119,13 +119,12 @@ const contacts = await client.listContacts({
 });
 ```
 
-### Create a webhook
+### Webhooks
+
+Create, change and delete webhooks in your Deskwoot dashboard under **Settings > Webhooks**. The webhook's secret is shown once, right after you create it, so copy it then. An API token can list the webhooks of your workspace:
 
 ```typescript
-await client.createWebhook({
-  url: "https://your-app.com/webhooks/deskwoot",
-  events: ["conversation.created", "message.created"],
-});
+const webhooks = await client.listWebhooks();
 ```
 
 ## Links
